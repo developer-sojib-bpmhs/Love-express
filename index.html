@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sojib Music | Ultra Magic V2</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: #000; overflow: hidden; color: white;
+        }
+
+        .screen {
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; height: 100vh; width: 100%;
+            position: absolute; transition: 0.8s;
+        }
+
+        .hidden { display: none !important; }
+
+        .box {
+            background: rgba(255, 255, 255, 0.05); padding: 40px;
+            border-radius: 25px; backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2); text-align: center;
+            z-index: 200; box-shadow: 0 0 50px rgba(255, 0, 127, 0.2);
+        }
+
+        input {
+            background: rgba(255, 255, 255, 0.15); border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 15px; border-radius: 12px; color: white; font-size: 1rem;
+            text-align: center; margin-bottom: 20px; width: 85%; outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: #ff007f; background: rgba(255, 255, 255, 0.2); }
+
+        .btn {
+            background: linear-gradient(45deg, #ff007f, #ff5e62); color: white; 
+            border: none; padding: 15px 45px; border-radius: 50px; cursor: pointer;
+            font-weight: bold; text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 10px 20px rgba(255, 0, 127, 0.4); transition: 0.3s;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        /* টেক্সট আরও গাড় এবং গ্লোয়িং করা হয়েছে */
+        .floating-text {
+            position: absolute; white-space: nowrap; pointer-events: none;
+            animation: moveUp linear forwards; 
+            font-weight: 900; /* Extra Bold */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            /* ড্রপ শ্যাডো আরও স্ট্রং করা হয়েছে যাতে টেক্সট ক্লিয়ার বুঝা যায় */
+            filter: drop-shadow(0 0 12px rgba(0,0,0,0.8)); 
+            text-shadow: 0 0 15px currentColor;
+        }
+
+        @keyframes moveUp {
+            from { transform: translateY(110vh) scale(0.9); opacity: 0; }
+            15% { opacity: 1; } /* দ্রুত উজ্জ্বল হবে */
+            80% { opacity: 0.8; }
+            to { transform: translateY(-20vh) scale(1.4); opacity: 0; }
+        }
+
+        .footer {
+            position: absolute; bottom: 20px; width: 100%; text-align: center;
+            font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); 
+            letter-spacing: 4px; z-index: 101; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="step-1" class="screen">
+        <div class="box">
+            <h2 style="color: #fff; margin-bottom: 25px; font-size: 1.4rem; letter-spacing: 1px;">MAGIC NAME</h2>
+            <input type="text" id="userName" placeholder="এখানে নাম লেখো...">
+            <br>
+            <button class="btn" onclick="startLoading()">Start Magic</button>
+        </div>
+        <div class="footer">POWERED BY <b>SOJIB MUSIC</b></div>
+    </div>
+
+    <div id="step-3" class="screen hidden" style="background: radial-gradient(circle, #1a1a1a 0%, #000 100%);">
+        <div id="magic-area" style="position: absolute; width: 100%; height: 100%;"></div>
+        <div class="footer">DESIGNED BY <b>SOJIB MUSIC</b></div>
+    </div>
+
+    <script>
+        function startLoading() {
+            const name = document.getElementById('userName').value;
+            if (name === "") return alert("আগে নামটা লিখে নাও প্রিয়!");
+
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-3').classList.remove('hidden');
+
+            // টেক্সট আসার ফ্রিকোয়েন্সি ঠিক রাখা হয়েছে
+            setInterval(() => {
+                createParticle(name);
+            }, 150); 
+        }
+
+        function createParticle(name) {
+            const area = document.getElementById('magic-area');
+            const el = document.createElement('div');
+            el.classList.add('floating-text');
+            
+            const messages = [
+                `I LOVE YOU ${name}`, `MY JAN ❤️`, `LOVE YOU SO MUCH`,
+                `PRINCESS ${name}`, `MY EVERYTHING`, `FOREVER ❤️`,
+                `BABY ${name}`, `✨ MAGIC ✨`, `🌹 FOR YOU`, `😍 MY LOVE`
+            ];
+            
+            el.innerText = messages[Math.floor(Math.random() * messages.length)];
+            
+            // কালারগুলো আরও Deep/Garo করা হয়েছে (Opacity 0.8-0.9)
+            const colors = [
+                'rgba(255, 0, 127, 0.9)',   /* Deep Pink */
+                'rgba(0, 230, 255, 0.9)',   /* Bright Cyan */
+                'rgba(255, 255, 255, 0.9)',  /* Pure White */
+                'rgba(255, 45, 45, 0.9)',    /* Solid Red */
+                'rgba(255, 182, 193, 0.9)',  /* Light Pink */
+                'rgba(173, 255, 47, 0.9)'    /* Green Yellow */
+            ];
+            
+            el.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // বামে বেশি চাপানোর জন্য range কমানো হয়েছে (0% থেকে 70% এর মধ্যে থাকবে)
+            el.style.left = Math.random() * 70 + "vw"; 
+            
+            el.style.fontSize = (Math.random() * 1.5 + 1) + "rem"; // সাইজ একটু বড় করা হয়েছে
+            el.style.animationDuration = (Math.random() * 2 + 3) + "s"; // গতি একটু বাড়ানো হয়েছে
+
+            area.appendChild(el);
+            setTimeout(() => { el.remove(); }, 5000);
+        }
+    </script>
+</body>
+</html>
